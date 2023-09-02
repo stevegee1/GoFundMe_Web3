@@ -8,6 +8,7 @@ import "dotenv/config"
 const SEPOLIA_URL= process.env.SEPOLIA_RPC_URL!
 const PPRIVATE_KEY=process.env.PRIVATE_KEY!
 const ETHERSCAN=process.env.ETHERSCAN_API_KEY!
+
 const config: HardhatUserConfig = {
     solidity: "0.8.19",
     defaultNetwork: "hardhat",

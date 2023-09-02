@@ -5,72 +5,28 @@ import "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol";
 import "./PriceConverter.sol";
 import "hardhat/console.sol";
 
-error NotOwner();
-
+/**
+ * @author xxg.eth
+ * @title A goFundMe contract
+ */
 contract FundMe {
+    //Type declarations
     using PriceConverter for uint256;
 
-    mapping(address => uint256) public s_addressToAmountFunded;
-    address[] public s_funders;
+    //state variables
+    address[] private s_funders;
+    mapping(address => uint256) private s_addressToAmountFunded;
+    AggregatorV3Interface private immutable s_priceFeed;
+    address private immutable i_owner;
+    uint256 public constant MINIMUM_USD = 50 * 10**18;
 
-    // Could we make this constant?  /* hint: no! We should make it immutable! */
-    address public /* immutable */s_i_owner;
-    uint256 public constant MINIMUM_USD = 50 * 10 ** 18;
-    AggregatorV3Interface public priceFeed;
-    
+    //errors
+    error NotOwner();
+
     constructor(address priceFeedAddress) {
-     s_i_owner = msg.sender;
-        priceFeed= AggregatorV3Interface(priceFeedAddress);
+        i_owner = msg.sender;
+        s_priceFeed = AggregatorV3Interface(priceFeedAddress);
     }
-
-    function fund() public payable {
-        require(msg.value.getConversionRate(priceFeed) >= MINIMUM_USD, "You need to spend more ETH!");
-        // require(PriceConverter.getConversionRate(msg.value) >= MINIMUM_USD, "You need to spend more ETH!");
-       s_addressToAmountFunded[msg.sender] += msg.value;
-        s_funders.push(msg.sender);
-    }
-    
-    function getVersion() public view returns (uint256){
-        // ETH/USD price feed address of Sepolia Network.
-      
-        return priceFeed.version();
-    }
-    
-    modifier onlyOwner {
-        // require(msg.sender == owner);
-        if (msg.sender !=s_i_owner) revert NotOwner();
-        _;
-    }
-    
-    function withdraw() public onlyOwner {
-        for (uint256 funderIndex=0; funderIndex < s_funders.length; funderIndex++){
-            address funder = s_funders[funderIndex];
-           s_addressToAmountFunded[funder] = 0;
-        }
-        s_funders = new address[](0);
-        // // transfer
-        // payable(msg.sender).transfer(address(this).balance);
-        // // send
-        // bool sendSuccess = payable(msg.sender).send(address(this).balance);
-        // require(sendSuccess, "Send failed");
-        // call
-        (bool callSuccess, ) = payable(msg.sender).call{value: address(this).balance}("");
-        require(callSuccess, "Call failed");
-    }
-    function cheaperWithdraw() public payable onlyOwner {
-        
-    }
-    // Explainer from: https://solidity-by-example.org/fallback/
-    // Ether is sent to contract
-    //      is msg.data empty?
-    //          /   \ 
-    //         yes  no
-    //         /     \
-    //    receive()?  fallback() 
-    //     /   \ 
-    //   yes   no
-    //  /        \
-    //receive()  fallback()
 
     fallback() external payable {
         fund();
@@ -80,7 +36,69 @@ contract FundMe {
         fund();
     }
 
+    modifier onlyOwner() {
+        // require(msg.sender == owner);
+        if (msg.sender != i_owner) revert NotOwner();
+        _;
+    }
+
+    /**
+     * receive fund in eth with the minimum of 50usd in eth
+     */
+    function fund() public payable {
+        require(
+            msg.value.getConversionRate(s_priceFeed) >= MINIMUM_USD,
+            "You need to spend more ETH!"
+        );
+        // require(PriceConverter.getConversionRate(msg.value) >= MINIMUM_USD, "You need to spend more ETH!");
+        s_addressToAmountFunded[msg.sender] += msg.value;
+        s_funders.push(msg.sender);
+    }
+
+    function withdraw() public onlyOwner {
+        address[] memory funders;
+        funders = s_funders;
+
+        for (
+            uint256 funderIndex = 0;
+            funderIndex < funders.length; //reading  state variable
+            funderIndex++
+        ) {
+            address funder = funders[funderIndex]; //reading from a state variable
+            s_addressToAmountFunded[funder] = 0; //writing to a state variable
+        }
+        s_funders = new address[](0); //writing to a state variable
+        (bool callSuccess, ) = payable(msg.sender).call{
+            value: address(this).balance
+        }("");
+        require(callSuccess, "Call failed");
+    }
+
+    function cheaperWithdraw() public payable onlyOwner {}
+
+    function getVersion() public view returns (uint256) {
+        // ETH/USD price feed address of Sepolia Network.
+
+        return s_priceFeed.version();
+    }
+
+    function getFunder(uint256 _index) public view returns (address) {
+        return s_funders[_index];
+    }
+
+    function getAmountFundedByAddress(address _funder)
+        public
+        view
+        returns (uint256)
+    {
+        return s_addressToAmountFunded[_funder];
+    }
+
+    function getOwner() public view returns (address) {
+        return i_owner;
+    }
+
+    function getPriceFeed() public view returns (AggregatorV3Interface) {
+        return s_priceFeed;
+    }
 }
-
-
-

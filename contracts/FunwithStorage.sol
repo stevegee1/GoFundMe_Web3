@@ -18,7 +18,7 @@ contract FunWithStorage {
 
     constructor() {
         favoriteNumber = 25; // See stored spot above // SSTORE
-        someBool = true; // See stored spot above // SSTORE
+        someBool = false; // See stored spot above // SSTORE
         myArray.push(222); // SSTORE
         myMap[0] = true; // SSTORE
         i_not_in_storage = 123;
