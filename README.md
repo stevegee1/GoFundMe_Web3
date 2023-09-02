@@ -6,5 +6,6 @@ This contract utilized the power of decentralization through smartcontracts (sol
 * [git](https://git-scm.com/)
    ** run `git --version` to see the version if you already have git installed.
 * [Nodejs] (https://nodejs.org/en/)
-   ** run `node --version` to see the version if you already have nodejs installed
+   - run `node --version` to see the version if you already have nodejs installed
+   - runneth
 
