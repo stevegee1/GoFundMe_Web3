@@ -39,8 +39,8 @@ This contract utilized the power of decentralization through smartcontracts (sol
 
 ## Scripts
 After deploy to a testnet, you can run the following scripts after deploy to a testnet:
--fund contract: `yarn run fundScriptSepolia`
--withdraw contractBalance: `yarn run withdrawScriptSepolia`
+- fund contract: `yarn run fundScriptSepolia`
+- withdraw contractBalance: `yarn run withdrawScriptSepolia`
 
 ## Estimate gas
 You can estimate how much gas cost by running:
