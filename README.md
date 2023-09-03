@@ -27,8 +27,9 @@ This contract utilized the power of decentralization through smartcontracts (sol
 
 # Deployment to a testnet or mainnet:
 1. Setup environment variable
- - You will want to set your RPC_SEPOLIA_URL/RPC_Mainnet_URL: [Alchemy](https://www.alchemy.com/)[Infura](https://www.infura.io/)) 
-   or any EVM_Compatible RPC
+ - You will want to set your RPC_SEPOLIA_URL/RPC_Mainnet_URL: [Alchemy](https://www.alchemy.com/)
+   + [Infura](https://www.infura.io/)) 
+   + or any EVM_Compatible RPC
    
 
 
