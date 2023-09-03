@@ -15,5 +15,19 @@ This contract utilized the power of decentralization through smartcontracts (sol
 - ` cd GoFundMe_Web3`
 - `yarn `
 
+# Usage
+
+## Deploy (default network - hardhat):
+- `yarn hardhat deploy`
+
+## Testing:
+- `yarn hardhat testing`
+## Test Coverage:
+- `yarn hardhat coverage`
+
+# Deployment to a testnet or mainnet
+
+
+
 
 
