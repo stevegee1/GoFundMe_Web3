@@ -29,6 +29,8 @@ This contract utilized the power of decentralization through smartcontracts (sol
 1. Setup environment variable
  - You will want to set your RPC_SEPOLIA_URL/RPC_Mainnet_URL: [Alchemy](https://www.alchemy.com/)
    + [Infura](https://www.infura.io/)) or any EVM_Compatible RPC
+ - PRIVATE_KEY: The private key of your account (like from [metamask](https://metamask.io/))
+
    
 
 
