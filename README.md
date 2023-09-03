@@ -11,9 +11,9 @@ This contract utilized the power of decentralization through smartcontracts (sol
    - run `yarn --version` to check if you already have yarn installed
    
 # Quickstart
-` git clone https://github.com/stevegee1/GoFundMe_Web3.git`
-` cd GoFundMe_Web3`
-`yarn `
+- ` git clone https://github.com/stevegee1/GoFundMe_Web3.git`
+- ` cd GoFundMe_Web3`
+- `yarn `
 
 
 
