@@ -7,7 +7,7 @@
         "test": "echo \"Error: no test specified\" && exit 1",
         "deploy": "yarn hardhat deploy",
         "fundScriptSepolia": "yarn hardhat run /Users/user/xx/FundMe/scripts/exampleScript/fundScript.ts --network sepolia",
-        "withdrawScriptSepolia":"yarn hardhat run /Users/user/xx/FundMe/scripts/exampleScript/withdrawScript.ts --network sepolia"
+        "withdrawScriptSepolia": "yarn hardhat run /Users/user/xx/FundMe/scripts/exampleScript/withdrawScript.ts --network sepolia"
     },
     "keywords": [],
     "author": "",
@@ -31,6 +31,7 @@
         "hardhat": "^2.17.1",
         "hardhat-deploy": "^0.11.34",
         "hardhat-gas-reporter": "^1.0.8",
+        "http-server": "^14.1.1",
         "prettier": "^3.0.0",
         "prettier-plugin-solidity": "^1.1.3",
         "solidity-coverage": "^0.8.0",
